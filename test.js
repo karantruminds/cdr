@@ -2,7 +2,7 @@ const fs = require("fs");
 const Pool = require("pg").Pool;
 const fastcsv = require("fast-csv");
 
-let stream = fs.createReadStream("Data1.csv");
+let stream = fs.createReadStream("Data.csv");
 let csvData = [];
 let csvStream = fastcsv
   .parse()
@@ -47,7 +47,7 @@ let csvStream = fastcsv
     //console.log(csvData[0]);
         
         
-        for(var i=1;i<csvData.length;i++){
+        for(var i=1;i<csvData.length-1;i++){
                 var row=csvData[i];
                 let date1 = row[index_date];
                 let sub_site_id1 = row[index_subsiteid];
@@ -68,6 +68,7 @@ let csvStream = fastcsv
         client.query(`DROP TABLE res`,(err,res)=>{
             if (err) {console.log(err.stack);}
         });
+        
         client.query(`CREATE TABLE res("date","sub_site",sum) AS SELECT "date","sub_site",SUM("mb_used") FROM tutu1 GROUP BY "sub_site","date" `,(err,res)=>{
             if (err) {console.log(err.stack);}
         });
@@ -81,11 +82,13 @@ let csvStream = fastcsv
             if (err) {console.log(err.stack);}
             else {
                 console.log(res.rows);
+                done();
             }
         });
+        
       }
         finally{
-          done();
+          //done();
         }
     });
     });

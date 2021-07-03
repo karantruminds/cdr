@@ -9,8 +9,8 @@
   "author": "Eduard Karesli",
   "license": "ISC",
   "dependencies": {
-    "fast-csv": "*",
-    "pg": "*",
+    "fast-csv": "^4.3.6",
+    "pg": "^8.6.0",
     "prompt-sync": "^4.2.0"
   }
 }
